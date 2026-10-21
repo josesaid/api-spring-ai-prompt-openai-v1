@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>api-spring-ai-prompt-openai-v1</title>
+  <meta name="description" content="Spring Boot and Spring AI example that uses prompt engineering with OpenAI. It shows how to combine a system role, user instructions and a structured output format to turn a short business request int">
+  <!-- Theme: Swiss (white grid, black rules and a red accent). Each repository uses a different Pages theme. -->
+  <style>
+    :root { --bg: #ffffff; --panel: #ffffff; --fg: #111111; --muted: #555555; --accent: #e10600;
+  --border: #111111; --code: #f2f2f2; --font: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  --head: #111111; }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font);
+      padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+    main { max-width: 880px; margin: 0 auto; padding: 40px 0 64px; }
+    .hero { background: var(--panel); border: 2px solid var(--border); border-radius: 18px; padding: 28px; margin-bottom: 28px; }
+    h1 { font-size: 2.1rem; margin: 0 0 8px; color: var(--head); line-height: 1.2; }
+    h2 { font-size: 1.35rem; margin: 40px 0 12px; color: var(--head); border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+    h3 { font-size: 1.1rem; margin: 26px 0 8px; color: var(--accent); }
+    p, li { color: var(--fg); }
+    a { color: var(--accent); font-weight: 600; }
+    .panel { background: var(--panel); border: 2px solid var(--border); border-radius: 14px; padding: 22px 26px; }
+    .wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .95rem; background: var(--panel); }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { color: var(--head); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9rem; }
+    code { background: var(--code); padding: 1px 6px; border-radius: 5px; }
+    pre { background: var(--code); padding: 14px; border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; max-width: 100%; }
+    pre code { background: none; padding: 0; }
+    img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); }
+    .cta { display:inline-block; margin: 14px 10px 0 0; padding: 8px 16px; border: 2px solid var(--accent); border-radius: 10px; text-decoration: none; color: var(--accent); }
+    footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 2px solid var(--border); padding-top: 14px; }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>api-spring-ai-prompt-openai-v1</h1>
+    <p>Spring Boot and Spring AI example that uses prompt engineering with OpenAI. It shows how to combine a system role, user instructions and a structured output format to turn a short business request into a requirements analysis. It also exposes a REST endpoint that forwards a question to the model.</p>
+    <a class="cta" href="https://github.com/josesaid/api-spring-ai-prompt-openai-v1">View source on GitHub</a>
+    <a class="cta" href="https://josesaid.github.io/">Portfolio index</a>
+  </section>
+  <article class="panel">
+<p>Spring Boot and Spring AI example that uses <strong>prompt engineering</strong> with OpenAI. It shows how to combine a system role, user instructions and a structured output format to turn a short business request into a requirements analysis. It also exposes a REST endpoint that forwards a question to the model.</p>
+<p>This project is part of the <em>Java &amp; Spring AI Examples</em> series (module <strong>02 – Prompt Engineering</strong>).</p>
+<p><strong>Project page:</strong> https://josesaid.github.io/api-spring-ai-prompt-openai-v1/</p>
+<h2>What it does</h2>
+<p>On startup, <code>PromptRunner</code> runs two <code>CommandLineRunner</code> beans that call the model through <code>ChatClient</code>:</p>
+<ol>
+<li><strong>Requirements analysis:</strong> a system role (business analyst) with explicit rules, a business request and a required Markdown structure (objective, actors, functional and non-functional requirements, business rules and missing information).</li>
+<li><strong>Dynamic role prompt:</strong> a second role (application architect) analyzes a security incident-management request.</li>
+</ol>
+<p>The REST endpoint sends any question to the same model through <code>ChatService</code>.</p>
+<h2>Tech stack</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td>24 (see <code>pom.xml</code>)</td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td>4.x (Spring Boot parent in <code>pom.xml</code>)</td>
+</tr>
+<tr>
+<td>Spring AI</td>
+<td>2.0.0</td>
+</tr>
+<tr>
+<td>Model provider</td>
+<td>OpenAI (chat model, profile <code>openai</code>)</td>
+</tr>
+<tr>
+<td>Build tool</td>
+<td>Maven (wrapper included)</td>
+</tr>
+</tbody>
+</table>
+<h2>Project structure</h2>
+<pre><code>src/main/java/com/mx/development/jose/said/
+├── ApiSpringAiDemoV1Application.java   # Spring Boot entry point
+├── controller/ChatController.java      # GET /api/v1/chat-service/chat
+├── service/ChatService.java            # Service contract
+├── service/ChatServiceImpl.java        # Calls the model through ChatClient
+└── runner/PromptRunner.java            # Startup prompt examples
+src/main/resources/
+├── application.yml                     # Port, active profile, logging
+└── application-openai.yml              # OpenAI configuration
+</code></pre>
+<h2>Prerequisites</h2>
+<ul>
+<li><strong>JDK 24</strong>, as declared in <code>pom.xml</code></li>
+<li><strong>Maven</strong> (the Maven Wrapper is included, so a local installation is optional)</li>
+<li>An <strong>OpenAI API key</strong>, created at https://platform.openai.com/api-keys</li>
+</ul>
+<h2>Configuration</h2>
+<p>The API key is read from the <code>API_KEY</code> environment variable. Never commit a real key to the repository.</p>
+<pre><code class="language-bash">export API_KEY=your_openai_api_key
+</code></pre>
+<p>In PowerShell:</p>
+<pre><code class="language-powershell">$Env:API_KEY = &quot;your_openai_api_key&quot;
+</code></pre>
+<h2>Running the application</h2>
+<pre><code class="language-bash">./mvnw spring-boot:run
+</code></pre>
+<p>The application starts on port <strong>8088</strong>. The two prompt examples print their responses to the console at startup.</p>
+<h2>REST API</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Query parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/chat-service/chat</code></td>
+<td><code>question</code></td>
+<td>Sends the question to the model</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">curl &quot;http://localhost:8088/api/v1/chat-service/chat?question=Explain%20prompt%20engineering%20in%20one%20paragraph&quot;
+</code></pre>
+<h2>Key concepts</h2>
+<ul>
+<li><strong>System role:</strong> sets the model's behavior and rules.</li>
+<li><strong>User message:</strong> carries the task and its input data.</li>
+<li><strong>Structured output:</strong> a fixed set of Markdown sections makes the answer predictable.</li>
+<li><strong>Explicit constraints:</strong> rules such as "do not invent information" reduce hallucinations.</li>
+</ul>
+<h2>Author</h2>
+<p>Created by <strong>Jose Said Olano Garcia</strong>.</p>
+  </article>
+  <footer>Source and documentation: <a href="https://github.com/josesaid/api-spring-ai-prompt-openai-v1">github.com/josesaid/api-spring-ai-prompt-openai-v1</a> · <a href="https://josesaid.github.io/">josesaid.github.io</a></footer>
+</main>
+</body>
+</html>
