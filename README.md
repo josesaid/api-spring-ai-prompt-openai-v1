@@ -1,5 +1,7 @@
 # api-spring-ai-prompt-openai-v1
 
+![Java: 24](https://img.shields.io/badge/Java-24-ED8B00?logo=openjdk&logoColor=white) ![Spring_Boot: 4.1.0](https://img.shields.io/badge/Spring_Boot-4.1.0-6DB33F?logo=springboot&logoColor=white) ![Spring_AI: 2.0.0](https://img.shields.io/badge/Spring_AI-2.0.0-6DB33F) ![Model: OpenAI](https://img.shields.io/badge/Model-OpenAI-412991?logo=openai&logoColor=white)
+
 Spring Boot and Spring AI example that uses **prompt engineering** with OpenAI. It shows how to combine a system role, user instructions and a structured output format to turn a short business request into a requirements analysis. It also exposes a REST endpoint that forwards a question to the model.
 
 This project is part of the *Java & Spring AI Examples* series (module **02 – Prompt Engineering**).
